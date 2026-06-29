@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teach.mapper.TeachProjectInfoMapper">
+
+    <resultMap type="com.ruoyi.teach.domain.entity.TeachProjectInfo" id="TeachProjectInfoResult">
+        <result property="id" column="Id"/>
+        <result property="prjName" column="PrjName"/>
+        <result property="prjCode" column="PrjCode"/>
+        <result property="prjType" column="PrjType"/>
+        <result property="prjStatus" column="PrjStatus"/>
+        <result property="prjDesc" column="PrjDesc"/>
+        <result property="startDate" column="StartDate"/>
+        <result property="endDate" column="EndDate"/>
+        <result property="manager" column="Manager"/>
+        <result property="money" column="Money"/>
+        <result property="remark" column="Remark"/>
+        <result property="createBy" column="CreateBy"/>
+        <result property="updateBy" column="UpdateBy"/>
+        <result property="createTime" column="CreateTime"/>
+        <result property="updateTime" column="UpdateTime"/>
+        <result property="deleteTime" column="DeleteTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Id,PrjName,PrjCode,PrjType,PrjStatus,PrjDesc,StartDate,EndDate,
+        Manager,Money,Remark,CreateBy,UpdateBy,CreateTime,UpdateTime,DeleteTime
+    </sql>
+
+    <select id="findByConditions" resultMap="TeachProjectInfoResult">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM project_info
+        <where>
+            <if test="prjName != null and prjName != ''">
+                <bind name="prjNamePattern" value="'%' + prjName + '%'" />
+                AND PrjName LIKE #{prjNamePattern}
+            </if>
+            <if test="prjCode != null and prjCode != ''">
+                <bind name="prjCodePattern" value="'%' + prjCode + '%'" />
+                AND PrjCode LIKE #{prjCodePattern}
+            </if>
+            <if test="manager != null and manager != ''">
+                <bind name="managerPattern" value="'%' + manager + '%'" />
+                AND Manager LIKE #{managerPattern}
+            </if>
+            <if test="prjStatus != null and prjStatus != ''">
+                AND PrjStatus = #{prjStatus}
+            </if>
+        </where>
+        ORDER BY Id DESC
+    </select>
+
+    <insert id="insert" parameterType="com.ruoyi.teach.domain.entity.TeachProjectInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO project_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="prjName != null">PrjName,</if>
+            <if test="prjCode != null">PrjCode,</if>
+            <if test="prjType != null">PrjType,</if>
+            <if test="prjStatus != null">PrjStatus,</if>
+            <if test="prjDesc != null">PrjDesc,</if>
+            <if test="startDate != null">StartDate,</if>
+            <if test="endDate != null">EndDate,</if>
+            <if test="manager != null">Manager,</if>
+            <if test="money != null">Money,</if>
+            <if test="remark != null">Remark,</if>
+            <if test="createBy != null">CreateBy,</if>
+            <if test="updateBy != null">UpdateBy,</if>
+            <if test="createTime != null">CreateTime,</if>
+            <if test="updateTime != null">UpdateTime,</if>
+            <if test="deleteTime != null">DeleteTime,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="prjName != null">#{prjName},</if>
+            <if test="prjCode != null">#{prjCode},</if>
+            <if test="prjType != null">#{prjType},</if>
+            <if test="prjStatus != null">#{prjStatus},</if>
+            <if test="prjDesc != null">#{prjDesc},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="manager != null">#{manager},</if>
+            <if test="money != null">#{money},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteTime != null">#{deleteTime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.ruoyi.teach.domain.entity.TeachProjectInfo">
+        UPDATE project_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="prjName != null">PrjName = #{prjName},</if>
+            <if test="prjCode != null">PrjCode = #{prjCode},</if>
+            <if test="prjType != null">PrjType = #{prjType},</if>
+            <if test="prjStatus != null">PrjStatus = #{prjStatus},</if>
+            <if test="prjDesc != null">PrjDesc = #{prjDesc},</if>
+            <if test="startDate != null">StartDate = #{startDate},</if>
+            <if test="endDate != null">EndDate = #{endDate},</if>
+            <if test="manager != null">Manager = #{manager},</if>
+            <if test="money != null">Money = #{money},</if>
+            <if test="remark != null">Remark = #{remark},</if>
+            <if test="createBy != null">CreateBy = #{createBy},</if>
+            <if test="updateBy != null">UpdateBy = #{updateBy},</if>
+            <if test="createTime != null">CreateTime = #{createTime},</if>
+            <if test="updateTime != null">UpdateTime = #{updateTime},</if>
+            <if test="deleteTime != null">DeleteTime = #{deleteTime},</if>
+        </trim>
+        WHERE Id = #{id}
+    </update>
+
+    <delete id="deleteByIds">
+        DELETE FROM project_info
+        WHERE Id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
